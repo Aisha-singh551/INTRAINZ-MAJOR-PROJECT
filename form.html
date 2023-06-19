@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Form Validation</title>
+  <style>
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Form Validation</h1>
+  <form onsubmit="return validateForm()">
+    <label for="name">Name:</label>
+    <input type="text" id="name" required>
+    <span id="nameError" class="error"></span>
+
+    <br><br>
+
+    <label for="mobile">Mobile Number:</label>
+    <input type="text" id="mobile" required>
+    <span id="mobileError" class="error"></span>
+
+    <br><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" required>
+    <span id="emailError" class="error"></span>
+
+    <br><br>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" required>
+    <span id="passwordError" class="error"></span>
+
+    <br><br>
+
+    <input type="submit" value="Submit">
+  </form>
+
+  <script>
+    function validateForm() {
+      // Clear error messages
+      document.getElementById("nameError").textContent = "";
+      document.getElementById("mobileError").textContent = "";
+      document.getElementById("emailError").textContent = "";
+      document.getElementById("passwordError").textContent = "";
+
+      // Get form input values
+      var name = document.getElementById("name").value;
+      var mobile = document.getElementById("mobile").value;
+      var email = document.getElementById("email").value;
+      var password = document.getElementById("password").value;
+
+      // Validate name
+      if (name === "") {
+        document.getElementById("nameError").textContent = "Name is required";
+        return false;
+      }
+
+      // Validate mobile number
+      if (mobile === "") {
+        document.getElementById("mobileError").textContent = "Mobile number is required";
+        return false;
+      }
+
+      if (!isValidMobile(mobile)) {
+        document.getElementById("mobileError").textContent = "Invalid mobile number";
+        return false;
+      }
+
+      // Validate email
+      if (email === "") {
+        document.getElementById("emailError").textContent = "Email is required";
+        return false;
+      }
+
+      if (!isValidEmail(email)) {
+        document.getElementById("emailError").textContent = "Invalid email format";
+        return false;
+      }
+
+      // Validate password
+      if (password === "") {
+        document.getElementById("passwordError").textContent = "Password is required";
+        return false;
+      }
+
+      if (password.length < 6) {
+        document.getElementById("passwordError").textContent = "Password should be at least 6 characters long";
+        return false;
+      }
+
+      // If all validations pass, the form can be submitted
+      return true;
+    }
+
+    function isValidMobile(mobile) {
+      // Simple mobile number validation using regular expression
+      var mobileRegex = /^[0-9]{10}$/;
+      return mobileRegex.test(mobile);
+    }
+
+    function isValidEmail(email) {
+      // Simple email validation using regular expression
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+  </script>
+</body>
+</html>
